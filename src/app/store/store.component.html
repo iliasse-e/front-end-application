@@ -1,0 +1,6 @@
+<p *ngIf="selectedArticle">Vous avez ajouté {{ selectedArticle }} au panier</p>
+<p *ngIf="!selectedArticle">Veuillez ajouter un article</p>
+<section class="store" >
+    <app-article *ngFor="let article of articles" [item]="article" (selectedArticle)="updateSelectedArticle($event)"></app-article>
+</section>
+
