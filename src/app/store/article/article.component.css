@@ -1,8 +1,9 @@
 .article {
     max-width: fit-content;
-    border: 1px rgba(0, 0, 0, 0.3) solid;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
     padding: 20px;
     border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3)
 }
 
 .article--img {

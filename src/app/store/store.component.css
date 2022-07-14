@@ -3,3 +3,26 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     grid-gap: 60px;
 }
+
+.cart {
+    display: flex;
+}
+
+.cart * {
+    margin: 20px 5px;
+}
+
+.cart img {
+    width: 50px;
+    height: 50px;
+}
+
+.cart-is-full {
+    position: absolute;
+    left: 33%;
+    background-color: red;
+    z-index: 1;
+    border: 1px rgba(0, 0, 0, 0.5) solid;
+    padding: 20px;
+    border-radius: 5px;
+}

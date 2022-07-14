@@ -3,5 +3,6 @@
     <h3 class="article--title">{{ item.title }}</h3>
     <p class="article--subtitle">{{ item.brand }}</p>
     <p class="article--price">{{ item.price }} {{ item.currency }}</p>
-    <button (click)="addToBasket()">Ajouter au panier</button>
+    <button *ngIf="!isSelected" (click)="addToBasket()">Ajouter au panier</button>
+    <button *ngIf="isSelected" (click)="dropItem()">Retirer du panier</button>
 </div>

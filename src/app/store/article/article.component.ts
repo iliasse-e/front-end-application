@@ -8,6 +8,7 @@ import { articles, ArticleType } from 'src/app/articles-list-mock';
 })
 export class ArticleComponent implements OnInit {
 
+  isSelected = false;
   @Input() item: ArticleType = articles[2];
   @Output() selectedArticle:any = new EventEmitter<ArticleComponent>()
   constructor() { }
@@ -18,7 +19,13 @@ export class ArticleComponent implements OnInit {
 
   addToBasket() {
     this.selectedArticle.emit(this.item.title)
+    this.isSelected = true
     console.log(`vous avez ajouté l'objet ${this.item.title} au panier`)
+  }
+
+  dropItem() {
+    this.isSelected = false
+    this.selectedArticle.emit(undefined)
   }
 
 }

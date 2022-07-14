@@ -1,6 +1,15 @@
-<p *ngIf="selectedArticle">Vous avez ajouté {{ selectedArticle }} au panier</p>
-<p *ngIf="!selectedArticle">Veuillez ajouter un article</p>
+<section class="cart" style="text-align:center;">
+    <div *ngIf="fullCart" class="cart-is-full">Your cart is full, you already have 10 articles selected</div>
+    <div *ngIf="!fullCart" class="cart-size">Your have {{numberOfItems}} items in your cart (max: 10)</div>
+    <div class="store" style="display: flex; justify-content: space-between; width: 800px;" >
+        <app-chair></app-chair>
+        <app-cup></app-cup>
+    </div>
+    <!-- <h4 class="cart-title">Mon Panier : </h4>
+    <p *ngIf="selectedArticle">Vous avez ajouté {{ selectedArticle }} au panier</p>
+    <p *ngIf="!selectedArticle">Veuillez ajouter un article</p>
+</section>
 <section class="store" >
-    <app-article *ngFor="let article of articles" [item]="article" (selectedArticle)="updateSelectedArticle($event)"></app-article>
+    <app-article *ngFor="let article of articles" [item]="article" (selectedArticle)="updateSelectedArticle($event)"></app-article> -->
 </section>
 
