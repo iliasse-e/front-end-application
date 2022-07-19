@@ -1,0 +1,28 @@
+.auth-container {
+    
+}
+
+.auth-form {
+    display: flex;
+}
+
+.input-field {
+    padding: 10px;
+}
+
+.errors {
+
+}
+
+.error-msg {
+    font-size: 0.7em;
+    color: red;
+}
+
+.ng-valid .ng-touched {
+    border-color: green;
+}
+
+.ng-invalid .ng-touched {
+    border-color: red;
+}

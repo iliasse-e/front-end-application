@@ -1,0 +1,27 @@
+<h2 class="auth-title">Authentifiez-vous</h2>
+<div class="auth-container">
+    <form (ngSubmit)="handleSubmit()" [formGroup]="form" class="auth-form">
+        <div class="input-field">
+            <label for="email">email</label>
+            <input formControlName="email" type="text" class="email-input">
+            <div class="errors" *ngIf="email?.errors && email?.touched">
+                <p class="error-msg" *ngIf="email?.hasError('email')">Mauvais format d'email</p>
+                <p class="error-msg" *ngIf="email?.hasError('required')">Email requis</p>
+            </div>
+            <div class="errors" *ngIf="email?.touched && isSubmit">
+                <p class="error-msg" *ngIf="email?.hasError('errorMsg')">{{ email?.errors?.['errorMsg'] }}</p>
+            </div>
+        </div>
+        <div class="input-field">
+            <label for="email">password</label>
+            <input formControlName="password" type="text" class="password-input">
+            <div class="errors" *ngIf="password?.errors && password?.touched">
+                <p class="error-msg" *ngIf="password?.hasError('required')">Mot de passe requis</p>
+            </div>
+            <div class="errors" *ngIf="password?.touched && isSubmit">
+                <p class="error-msg" *ngIf="password?.hasError('errorMsg')">{{ password?.errors?.['errorMsg'] }}</p>
+            </div>
+        </div>
+        <button type="submit" class="submit-auth">S'authentifier</button>
+    </form>
+</div>
