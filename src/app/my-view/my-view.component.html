@@ -1,0 +1,15 @@
+<main class="department-searcher">
+    <section class="user-search">
+        <form [formGroup]="form" (ngSubmit)="handleSubmit()" form class="departement-form">
+            <div class="input-field">
+                <label for="departement-number">Entrez le numéro d'un département</label>
+                <input type="text" formControlName="code" class="input">
+            </div>
+            <button type="submit" class="department-submit">Rechercher</button>
+        </form>
+    </section>
+    <section class="result">
+        <p>{{ response?.nom }}</p>
+        <p>Chef lieu : {{ communes?.['0']?.nom }}</p>
+    </section>
+</main>
