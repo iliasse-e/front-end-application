@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../model/interfaces';
+import { PageProduct, Product } from '../model/interfaces';
 import * as uuid from "uuid";
 import { Observable, of, throwError } from 'rxjs';
 
@@ -19,13 +19,13 @@ export class ProductsService {
       id: uuid.v4(),
       name: "TV UHD",
       price: 1298,
-      promotion: true
+      promotion: false
     },
     {
       id: uuid.v4(),
-      name: "iMac 27''",
-      price: 1459,
-      promotion: true
+      name: "Baladeur K-7",
+      price: 159,
+      promotion: false
     }
   ]
 
@@ -35,8 +35,33 @@ export class ProductsService {
     return of(this.products);
   }
 
-  public getByKeyword(keyword: string): Observable<Array<Product>> {
-    const result = this.products.filter(p => p.name.includes(keyword))
+  public getProductsPage(pageNumber: number, pageSize: number): Observable<PageProduct> {
+    const totalPages = ~~(this.products.length / pageSize);
+    const selectedProductsPage = this.products.slice(pageNumber*pageSize, pageNumber*pageSize+pageSize);
+    const result: PageProduct = {
+      products: selectedProductsPage,
+      pagination: {
+        currentPage: pageNumber,
+        size: pageSize,
+        totalPages: totalPages
+      }
+    }
+    return of(result);
+  }
+
+  public getByKeyword(keyword: string, pageNumber: number, pageSize: number): Observable<PageProduct> {
+    let selectedProductsPage = this.products.filter(p => p.name.includes(keyword))
+    const totalPages = ~~(selectedProductsPage.length / pageSize);
+    selectedProductsPage = selectedProductsPage.slice(pageNumber*pageSize, pageNumber*pageSize+pageSize);
+    
+    const result: PageProduct = {
+      products: selectedProductsPage,
+      pagination: {
+        currentPage: pageNumber,
+        size: pageSize,
+        totalPages: totalPages
+      }
+    }
     return of(result);
   }
 
@@ -45,5 +70,14 @@ export class ProductsService {
     return of(true)
   }
   
-  constructor() { }
+  constructor() {
+    for (let i=0; i<17; i++) {
+      this.products.push({
+        id: uuid.v4(),
+        name: "iMac 27''",
+        price: 1459,
+        promotion: true
+      })
+    }
+  }
 }

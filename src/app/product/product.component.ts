@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Product } from '../model/interfaces';
+import { PageProduct, Pagination, Product } from '../model/interfaces';
 import { ProductsService } from '../service/products.service';
 
 @Component({
@@ -11,27 +11,37 @@ import { ProductsService } from '../service/products.service';
 export class ProductComponent implements OnInit {
 
   products!: Product[];
+  pagination : Pagination = {
+    currentPage: 0,
+    size: 5,
+    totalPages: 1
+  }
   errorMsg!: string;
   searchFormGroup!: FormGroup;
+  isSearching: boolean = false;
 
   constructor(private productsService: ProductsService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.productsService.getAllProducts().subscribe({
-      next: (data: Product[]) => {
-        this.products = data;
+    this.handleGetProductsPage();
+    this.searchFormGroup = this.formBuilder.group({
+      keyword: this.formBuilder.control(null)
+    });
+  }
+  
+  public handleGetProductsPage(): void {
+    this.productsService.getProductsPage(this.pagination.currentPage, this.pagination.size).subscribe({
+      next: (data: PageProduct) => {
+        this.products = data.products;
+        this.pagination = data.pagination;
       },
       error: (err) => {
         this.errorMsg = err;
       }
     });
-
-    this.searchFormGroup = this.formBuilder.group({
-      keyword: this.formBuilder.control(null)
-    });
   }
 
-  handleDelete(product: Product): void {
+  public handleDelete(product: Product): void {
     this.productsService.removeProduct(product.id).subscribe({
       next: (data: boolean) => {
         const index = this.products.indexOf(product)
@@ -43,15 +53,28 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  handleSearchByKeyword(keyword: string): void {
-    this.productsService.getByKeyword(keyword).subscribe({
-      next: (data: Product[]) => {
-        this.products = data;
+  public handleSearchByKeyword(keyword: string, page: number): void {
+    this.isSearching = true;
+    // this.pagination.currentPage = 0;
+    this.productsService.getByKeyword(keyword, page, this.pagination.size).subscribe({
+      next: (data: PageProduct) => {
+        this.products = data.products;
+        this.pagination = data.pagination;
       },
       error: (err) => {
         this.errorMsg = err;
       }
     })
+  }
+
+  public goToPage(index: number): void {
+    console.log(index)
+    this.pagination.currentPage = index;
+    console.log(index, this.pagination.currentPage)
+    if (this.isSearching === true) {
+      this.handleSearchByKeyword(this.searchFormGroup.value.keyword, this.pagination.currentPage);
+    }
+    else this.handleGetProductsPage()
   }
 
 }
