@@ -1,0 +1,47 @@
+<div class="container">
+    <ng-template #errors>
+        <div class="text-danger">{{errorMsg}}</div>
+    </ng-template>
+    <div class="card" *ngIf="products; else errors">
+        <div class="card-header">Products list</div>
+        <div class="card-body">
+          <p>{{searchFormGroup.value | json}}</p>
+            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchByKeyword(searchFormGroup.value.keyword)" class="input-group mb-3">
+                <input formControlName="keyword" type="text" class="form-control" placeholder="Search by keyword" aria-label="Search by keyword" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of products">
+                      <th scope="row">{{product.id}}</th>
+                      <td>{{product.name}}</td>
+                      <td>{{product.price}} €</td>
+                      <td>
+                          <div [ngClass]="product.promotion === true ?'alert-success':'alert-secondary'" class="alert " role="alert">
+                            <span *ngIf="product.promotion===true">Promotion</span>
+                            <span *ngIf="product.promotion===false">Out of promotion</span>
+                          </div>
+
+                      </td>
+                      <td>
+                        <button (click)="handleDelete(product)" class="btn btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+    </div>
+</div>
