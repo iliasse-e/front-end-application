@@ -33,9 +33,12 @@
                           </div>
                       </td>
                       <td>
-                        <button (click)="handleDelete(product)" class="btn btn-danger">
+                        <button *ngIf="isAdmin" (click)="handleDelete(product)" class="btn btn-danger">
                             <i class="bi bi-trash"></i>
                         </button>
+                        <div *ngIf="!isAdmin" class="btn">
+                          <i class="bi bi-trash"></i>
+                        </div>
                       </td>
                     </tr>
                   </tbody>

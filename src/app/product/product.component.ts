@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Role } from '../enum/role';
 import { PageProduct, Pagination, Product } from '../model/interfaces';
+import { LoginService } from '../service/login.service';
 import { ProductsService } from '../service/products.service';
 
 @Component({
@@ -19,8 +21,9 @@ export class ProductComponent implements OnInit {
   errorMsg!: string;
   searchFormGroup!: FormGroup;
   isSearching: boolean = false;
+  isAdmin: boolean = this.loginService.hasRole(Role.ADMIN);
 
-  constructor(private productsService: ProductsService, private formBuilder: FormBuilder) { }
+  constructor(private productsService: ProductsService, private formBuilder: FormBuilder, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.handleGetProductsPage();
@@ -42,20 +45,21 @@ export class ProductComponent implements OnInit {
   }
 
   public handleDelete(product: Product): void {
-    this.productsService.removeProduct(product.id).subscribe({
-      next: (data: boolean) => {
-        const index = this.products.indexOf(product)
-        this.products.splice(index, 1)
-      },
-      error: (err) => {
-        console.error(err)
-      }
-    });
+    if (this.isAdmin) {
+      this.productsService.removeProduct(product.id).subscribe({
+        next: (data: boolean) => {
+          const index = this.products.indexOf(product);
+          this.products.splice(index, 1);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+    }
   }
 
   public handleSearchByKeyword(keyword: string, page: number): void {
     this.isSearching = true;
-    // this.pagination.currentPage = 0;
     this.productsService.getByKeyword(keyword, page, this.pagination.size).subscribe({
       next: (data: PageProduct) => {
         this.products = data.products;
@@ -70,11 +74,11 @@ export class ProductComponent implements OnInit {
   public goToPage(index: number): void {
     console.log(index)
     this.pagination.currentPage = index;
-    console.log(index, this.pagination.currentPage)
+    console.log(index, this.pagination.currentPage);
     if (this.isSearching === true) {
       this.handleSearchByKeyword(this.searchFormGroup.value.keyword, this.pagination.currentPage);
     }
-    else this.handleGetProductsPage()
+    else this.handleGetProductsPage();
   }
 
 }

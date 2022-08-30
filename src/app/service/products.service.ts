@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PageProduct, Product } from '../model/interfaces';
-import * as uuid from "uuid";
+import * as UUID from "uuid";
 import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({
@@ -10,19 +10,19 @@ export class ProductsService {
 
   private products: Product[] = [
     {
-      id: uuid.v4(),
+      id: UUID.v4(),
       name: "iPhone 13",
       price: 698,
       promotion: true
     },
     {
-      id: uuid.v4(),
+      id: UUID.v4(),
       name: "TV UHD",
       price: 1298,
       promotion: false
     },
     {
-      id: uuid.v4(),
+      id: UUID.v4(),
       name: "Baladeur K-7",
       price: 159,
       promotion: false
@@ -73,7 +73,7 @@ export class ProductsService {
   constructor() {
     for (let i=0; i<17; i++) {
       this.products.push({
-        id: uuid.v4(),
+        id: UUID.v4(),
         name: "iMac 27''",
         price: 1459,
         promotion: true

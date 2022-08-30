@@ -1,0 +1,11 @@
+#navbarNav, .login_nav {
+    display: flex;
+}
+
+#navbarNav {
+    justify-content: space-between;
+}
+
+.login_nav {
+    justify-content: space-around;
+}

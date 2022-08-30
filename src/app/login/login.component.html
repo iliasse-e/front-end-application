@@ -1,0 +1,19 @@
+<div class="container col-md-6 mt-5">
+    <div class="card">
+        <div class="card-header">Authentification</div>
+        <div class="text-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+        <div class="card-body">
+            <form [formGroup]="loginFormGroup" (ngSubmit)="handleLogin(loginFormGroup.value.user, loginFormGroup.value.password)">
+                <div class="email form-group w-100 mb-3">
+                    <label for="email">Email : </label>
+                    <input type="email" class="user-email form-control" formControlName="user">
+                </div>
+                <div class="password form-group w-100 mb-3">
+                    <label for="password">Password : </label>
+                    <input type="text" class="password form-control" formControlName="password">
+                </div>
+                <button class="form-submit btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
