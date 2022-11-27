@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminTemplateComponent } from './admin-template/admin-template.component';
 import { AuthentificationGuard } from './guards/authentification.guard';
 import { LoginComponent } from './login/login.component';
-import { ProductComponent } from './product/product.component';
+import { CatalogComponent } from './catalog/catalog.component';
+import {ProductComponent} from "./product/product.component";
 
 const APP_ROUTES: Routes = [
   { path: "admin", component: AdminTemplateComponent, canActivate: [AuthentificationGuard], children: [
-    { path: "products", component: ProductComponent },
+    { path: "products", component: CatalogComponent },
   ] },
+    { path: "products/:designation", component: ProductComponent },
   { path: "login", component: LoginComponent },
   { path: "", component: LoginComponent }
 ];

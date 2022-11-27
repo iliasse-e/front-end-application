@@ -1,0 +1,61 @@
+<div class="container">
+    <ng-template #errors>
+        <div class="text-danger">{{errorMsg}}</div>
+    </ng-template>
+    <div class="card" *ngIf="products; else errors">
+        <div class="card-header d-flex justify-content-between">
+          Products list
+          <button mat-raised-button color="accent" *ngIf="isAdmin" (click)="openSaveDialog()" class="btn btn-primary">
+            Add new product
+          </button>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchByKeyword(searchFormGroup.value.keyword, 0)" class="input-group mb-3">
+                <input formControlName="keyword" type="text" class="form-control" placeholder="Search by keyword" aria-label="Search by keyword" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">Category</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of products; let i = index">
+                      <th scope="row">{{product.category.name}}</th>
+                      <button (click)="navigateProduct(product.designation)">
+                        <td >{{product.designation}}</td>
+                      </button>
+                      <td>{{product.price}} €</td>
+                      <td>
+                        <button *ngIf="isAdmin" (click)="openDeleteDialog(product.designation)" class="btn btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <div *ngIf="!isAdmin" class="btn">
+                          <i class="bi bi-trash"></i>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+            </table>
+            <nav aria-label="numéro de page du catalogue">
+              <ul class="pagination pagination-sm">
+                <li
+                *ngFor="let page of [].constructor(pagination.totalPages);
+                let i=index" [ngClass]="i === pagination.currentPage ? '' : 'disabled'"
+                class="page-item ms-1 mt-1"
+                (click)="goToPage(i)"
+                >
+                  <a class="page-link">{{i+1}}</a>
+                </li>
+              </ul>
+            </nav>
+        </div>
+    </div>
+</div>

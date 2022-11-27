@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deleting product</h5>
+        <button mat-dialog-close type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        You really want to delete {{productDesignation}} ?
+      </div>
+      <div class="modal-footer">
+        <button mat-button mat-dialog-close type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button mat-button [mat-dialog-close]="true" (click)="delete(productDesignation)" type="button" class="btn btn-primary">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

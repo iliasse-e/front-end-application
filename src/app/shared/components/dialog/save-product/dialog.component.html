@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">New product</div>
+    <div class="text-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+    <div class="card-body">
+      <form [formGroup]="newProductFormGroup" (ngSubmit)="submitNewProduct(newProductFormGroup.value)">
+        <div class="designation form-group w-100 mb-3">
+          <label for="designation">Designation : </label>
+          <input type="text" class="user-email form-control" formControlName="designation">
+        </div>
+        <div class="price form-group w-100 mb-3">
+          <label for="price">Price : </label>
+          <input type="text" class="password form-control" formControlName="price">
+        </div>
+        <div class="quantity form-group w-100 mb-3">
+          <label for="quantity">Quantity : </label>
+          <input type="text" class="quantity form-control" formControlName="quantity">
+        </div>
+        <div class="dimensions form-group w-100 mb-3">
+          <label for="dimensions">Dimensions : </label>
+          <input type="text" class="dimensions form-control" formControlName="dimensions">
+        </div>
+        <div class="category form-group w-100 mb-3">
+          <label for="category">Category : </label>
+          <input type="text" class="category form-control" formControlName="category">
+        </div>
+        <button class="form-submit btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
